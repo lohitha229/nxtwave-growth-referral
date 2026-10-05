@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NxtWave AI Workshop — Referral Sprint</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f6f7fb;margin:0;color:#182033}
+.wrap{max-width:900px;margin:35px auto;padding:20px}
+.card{background:white;border-radius:18px;padding:28px;margin:16px 0;box-shadow:0 8px 25px rgba(0,0,0,.07)}
+h1{font-size:34px;margin:0 0 8px} h2{margin-top:0}
+.badge{display:inline-block;padding:7px 12px;border-radius:20px;background:#eef2ff;margin:4px;font-size:13px}
+input{width:100%;box-sizing:border-box;padding:13px;border:1px solid #ccd2df;border-radius:10px;margin:8px 0}
+button{border:0;border-radius:10px;padding:12px 17px;cursor:pointer;font-weight:700;margin:5px 4px 5px 0}
+.primary{background:#111827;color:white}.secondary{background:#e9edf5}
+.stat{font-size:30px;font-weight:800}.muted{color:#697386}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #eee}
+.progress{height:12px;background:#e9edf5;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:#111827}
+.small{font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+<div class="badge">FREE • 60 MINUTES</div><div class="badge">FINAL-YEAR ENGINEERING</div>
+<h1>Build Your First AI Project in 60 Minutes</h1>
+<p class="muted">Register, get your personal referral code, and invite classmates. This prototype demonstrates the growth loop proposed for the NxtWave challenge.</p>
+<button class="primary" onclick="document.getElementById('reg').scrollIntoView()">Get My Referral Code</button>
+</div>
+
+<div class="card" id="reg">
+<h2>Register for the workshop</h2>
+<input id="name" placeholder="Your name">
+<input id="college" placeholder="College / university">
+<input id="email" placeholder="Email">
+<button class="primary" onclick="register()">Register & Generate Code</button>
+<p id="msg" class="small"></p>
+</div>
+
+<div class="card" id="dash" style="display:none">
+<h2>Your Growth Dashboard</h2>
+<p class="muted">Your referral code</p>
+<div class="stat" id="code">NW-AI-XXXX</div>
+<p><span id="refs">0</span> referrals • <span id="rank">#12</span> demo rank</p>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p class="small">Goal: 5 referrals to become a campus connector.</p>
+<button class="primary" onclick="share()">Copy WhatsApp Message</button>
+<button class="secondary" onclick="simulate()">Simulate +1 Referral</button>
+<p id="sharemsg" class="small"></p>
+</div>
+
+<div class="card">
+<h2>Demo Leaderboard</h2>
+<table><tr><th>Rank</th><th>Student Connector</th><th>Referrals</th></tr>
+<tr><td>1</td><td>Demo Connector A</td><td>23</td></tr>
+<tr><td>2</td><td>Demo Connector B</td><td>18</td></tr>
+<tr><td>3</td><td>Demo Connector C</td><td>14</td></tr>
+<tr><td>4</td><td>You (after registration)</td><td id="leader">0</td></tr>
+</table>
+</div>
+</div>
+<script>
+let code="", refs=0;
+function register(){
+ const n=document.getElementById('name').value.trim();
+ const c=document.getElementById('college').value.trim();
+ const e=document.getElementById('email').value.trim();
+ if(!n||!c||!e){document.getElementById('msg').innerText="Please enter name, college and email for the demo.";return;}
+ code="NW-AI-"+Math.random().toString(36).substring(2,6).toUpperCase();
+ document.getElementById('code').innerText=code;
+ document.getElementById('dash').style.display="block";
+ document.getElementById('msg').innerText="Registered! Your personal referral code is ready.";
+}
+function simulate(){
+ refs++; document.getElementById('refs').innerText=refs; document.getElementById('leader').innerText=refs;
+ document.getElementById('bar').style.width=Math.min(refs*20,100)+"%";
+}
+function share(){
+ const msg=`I’m joining NxtWave’s free “Build Your First AI Project in 60 Minutes” workshop. Join me! Use my referral code ${code}.`;
+ navigator.clipboard?.writeText(msg);
+ document.getElementById('sharemsg').innerText="WhatsApp-ready message copied. In a real version, this button would open WhatsApp directly.";
+}
+</script>
+</body></html>
